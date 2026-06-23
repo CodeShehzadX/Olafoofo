@@ -1,0 +1,20 @@
+class AppRoutes {
+  // Splash & Onboarding
+  static const String splash = '/splash';
+  static const String onboarding = '/onboarding';
+  static const String welcome = '/welcome';
+
+  // Authentication
+  static const String login = '/login';
+  static const String signup = '/signup';
+  static const String phone = '/phone';
+  static const String forgotPassword = '/forgot-password';
+  static const String otp = '/otp';
+  static const String personalInformation = '/personal-information';
+    static const String usernameSetup = '/username-setup';
+
+ 
+  // Home
+  static const String home = '/home';
+  static const String profile = '/profile';
+}

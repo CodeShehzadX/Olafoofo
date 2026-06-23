@@ -1,0 +1,71 @@
+name: base_project
+description: "A comprehensive Flutter base template with GetX, custom widgets, and clean architecture"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.7.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+
+  # State Management
+  get: ^4.6.6
+
+  # HTTP Client
+  dio: ^5.4.0
+
+  # Local Storage
+  shared_preferences: ^2.2.2
+
+  # Image Picker
+  image_picker: ^1.0.7
+
+  # File Picker
+  file_picker: ^8.1.4
+
+  # Cached Network Image
+  cached_network_image: ^3.3.1
+
+  # Intl for date formatting
+  intl: ^0.19.0
+
+  # Flutter Native Splash
+  flutter_native_splash: ^2.4.6
+
+  # SVG Support
+  flutter_svg: ^2.2.2
+
+  # OTP Pin Input
+  pinput: ^5.0.0
+  country_code_picker: ^3.4.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
+  # Assets
+  assets:
+    - assets/images/
+    - assets/icons/
+
+  # Fonts
+  # fonts:
+  #   - family: Gilroy
+  #     fonts:
+  #       - asset: assets/fonts/gilroy/Gilroy-Regular.ttf
+  #       - asset: assets/fonts/gilroy/Gilroy-Medium.ttf
+  #         weight: 500
+  #       - asset: assets/fonts/gilroy/Gilroy-SemiBold.ttf
+  #         weight: 600
+  #       - asset: assets/fonts/gilroy/Gilroy-Bold.ttf
+  #         weight: 700
