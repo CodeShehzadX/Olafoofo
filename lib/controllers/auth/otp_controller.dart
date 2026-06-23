@@ -29,6 +29,10 @@ class OtpController extends GetxController {
 
   Timer? _timer;
 
+  /// Which flow opened this screen: 'signup' (default) or 'forgotPassword'.
+  /// Read from the route arguments so the single OTP screen can be reused.
+  String flow = 'signup';
+
   /// Whether the resend countdown has finished.
   bool get canResend => secondsRemaining.value == 0;
 
@@ -42,6 +46,10 @@ class OtpController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    final args = Get.arguments;
+    if (args is Map && args['flow'] is String) {
+      flow = args['flow'] as String;
+    }
     _startTimer();
   }
 
@@ -80,8 +88,12 @@ class OtpController extends GetxController {
       return;
     }
 
-    // TODO: Navigate to the Personal Information screen once its route exists,
-     Get.toNamed(AppRoutes.personalInformation);
+    // Route to the next step based on the flow that opened this screen.
+    if (flow == 'forgotPassword') {
+      Get.toNamed(AppRoutes.newPassword); 
+    } else {
+      Get.toNamed(AppRoutes.personalInformation);
+    }
   }
 
   /// Existing user wants to sign in.

@@ -43,7 +43,8 @@ class ForgotPasswordController extends GetxController {
     if (!(formKey.currentState?.validate() ?? false)) return;
 
     // TODO: Trigger the recovery / send-OTP request here.
-    Get.toNamed(AppRoutes.otp);
+    // Reuse the shared OTP screen; tell it this is the forgot-password flow.
+    Get.toNamed(AppRoutes.otp, arguments: {'flow': 'forgotPassword'});
   }
 
   /// New user wants to create an account.

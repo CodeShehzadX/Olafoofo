@@ -47,8 +47,8 @@ class PhoneController extends GetxController {
     // ignore: unused_local_variable
     final phoneNumber = '${dialCode.value}${phoneController.text.trim()}';
 
-    // TODO: Navigate to the OTP screen once its route exists, e.g.
-     Get.toNamed(AppRoutes.otp);
+    // Reuse the shared OTP screen; tell it this is the signup flow.
+    Get.toNamed(AppRoutes.otp, arguments: {'flow': 'signup'});
   }
 
   /// Existing user wants to sign in.
