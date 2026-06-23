@@ -1,10 +1,12 @@
 import 'package:base_project/controllers/auth/forgot_password_controller.dart';
+import 'package:base_project/controllers/auth/new_password_controller.dart';
 import 'package:base_project/controllers/auth/otp_controller.dart';
 import 'package:base_project/controllers/auth/personal_info_controller.dart';
 import 'package:base_project/controllers/auth/signin_controller.dart';
 import 'package:base_project/controllers/auth/username_controller.dart';
 import 'package:base_project/controllers/auth/welcome_controller.dart';
 import 'package:base_project/screens/auth/forgot_password_screen.dart';
+import 'package:base_project/screens/auth/new_password_screen.dart';
 import 'package:base_project/screens/auth/otp_screen.dart';
 import 'package:base_project/screens/auth/personal_info_screen.dart';
 import 'package:base_project/screens/auth/signin_screen.dart';
@@ -86,6 +88,14 @@ GetPage(
       page: () => const ForgotPasswordScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut<ForgotPasswordController>(() => ForgotPasswordController());
+      }),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.newPassword,
+      page: () => const NewPasswordScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<NewPasswordController>(() => NewPasswordController());
       }),
       transition: Transition.cupertino,
     ),

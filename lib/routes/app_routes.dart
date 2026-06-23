@@ -12,6 +12,7 @@ class AppRoutes {
   static const String otp = '/otp';
   static const String personalInformation = '/personal-information';
   static const String newPassword = '/new-password';
+ // static const String welcomeBack = '/welcome-back';
     static const String usernameSetup = '/username-setup';
 
  
