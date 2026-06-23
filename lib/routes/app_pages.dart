@@ -1,9 +1,11 @@
 import 'package:base_project/controllers/auth/otp_controller.dart';
 import 'package:base_project/controllers/auth/personal_info_controller.dart';
+import 'package:base_project/controllers/auth/signin_controller.dart';
 import 'package:base_project/controllers/auth/username_controller.dart';
 import 'package:base_project/controllers/auth/welcome_controller.dart';
 import 'package:base_project/screens/auth/otp_screen.dart';
 import 'package:base_project/screens/auth/personal_info_screen.dart';
+import 'package:base_project/screens/auth/signin_screen.dart';
 import 'package:base_project/screens/auth/username_screen.dart';
 import 'package:base_project/screens/auth/welcome_screen.dart';
 import 'package:get/get.dart';
@@ -66,6 +68,14 @@ GetPage(
       page: () => const WelcomeScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut<WelcomeController>(() => WelcomeController());
+      }),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.login,
+      page: () => const SigninScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<SigninController>(() => SigninController());
       }),
       transition: Transition.cupertino,
     ),
