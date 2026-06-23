@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.darkTheme,
 
       // Initial Route
-      initialRoute: AppRoutes.login,
+      initialRoute: AppRoutes.forgotPassword,
 
       // Routes
       getPages: AppPages.routes,
