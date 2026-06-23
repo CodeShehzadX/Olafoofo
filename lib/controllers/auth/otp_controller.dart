@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../routes/app_routes.dart';
+import '../../utils/validators.dart';
 import '../../widgets/custom_snackbar.dart';
 
 /// Business logic + state for the OTP verification screen.
@@ -79,12 +80,9 @@ class OtpController extends GetxController {
 
   /// Validate the OTP, then continue to the next step.
   void onNext() {
-    final code = otp.value;
-    if (code.length != otpLength || int.tryParse(code) == null) {
-      CustomSnackbar.error(
-        title: 'Invalid OTP',
-        message: 'Please enter the $otpLength-digit code',
-      );
+    final error = Validators.otp(otp.value, length: otpLength);
+    if (error != null) {
+      CustomSnackbar.error(title: 'Invalid OTP', message: error);
       return;
     }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../routes/app_routes.dart';
+import '../../utils/validators.dart';
 
 /// Business logic + state for the Sign In screen (GetX, no setState).
 class SigninController extends GetxController {
@@ -14,19 +15,11 @@ class SigninController extends GetxController {
 
   // ---- Validation -----------------------------------------------------------
 
-  String? validateIdentifier(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return 'Username is required';
-    }
-    return null;
-  }
+  String? validateIdentifier(String? value) =>
+      Validators.required(value, fieldName: 'Username');
 
-  String? validatePassword(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Password is required';
-    }
-    return null;
-  }
+  String? validatePassword(String? value) =>
+      Validators.required(value, fieldName: 'Password');
 
   // ---- Navigation -----------------------------------------------------------
 

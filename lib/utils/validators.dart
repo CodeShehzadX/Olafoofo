@@ -52,4 +52,30 @@ class Validators {
     }
     return null;
   }
+
+  // Username Validator
+  static String? username(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Username is required';
+    }
+    final username = value.trim();
+    if (username.length < 3) {
+      return 'Username must be at least 3 characters';
+    }
+    if (!RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(username)) {
+      return 'Use only letters, numbers and underscores';
+    }
+    return null;
+  }
+
+  // OTP Validator
+  static String? otp(String? value, {int length = 4}) {
+    if (value == null || value.isEmpty) {
+      return 'OTP is required';
+    }
+    if (value.length != length || int.tryParse(value) == null) {
+      return 'Please enter the $length-digit code';
+    }
+    return null;
+  }
 }

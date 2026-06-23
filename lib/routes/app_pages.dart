@@ -43,7 +43,7 @@ class AppPages {
       }),
       transition: Transition.cupertino,
     ),
-GetPage(
+    GetPage(
       name: AppRoutes.otp,
       page: () => const OtpScreen(),
       binding: BindingsBuilder(() {
@@ -67,7 +67,7 @@ GetPage(
       }),
       transition: Transition.cupertino,
     ),
-     GetPage(
+    GetPage(
       name: AppRoutes.welcome,
       page: () => const WelcomeScreen(),
       binding: BindingsBuilder(() {
@@ -96,6 +96,14 @@ GetPage(
       page: () => const NewPasswordScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut<NewPasswordController>(() => NewPasswordController());
+      }),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.signup,
+      page: () => const PhoneScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<PhoneController>(() => PhoneController());
       }),
       transition: Transition.cupertino,
     ),

@@ -17,19 +17,7 @@ class UsernameController extends GetxController {
 
   // ---- Validation -----------------------------------------------------------
 
-  String? validateUsername(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return 'Username is required';
-    }
-    final username = value.trim();
-    if (username.length < 3) {
-      return 'Username must be at least 3 characters';
-    }
-    if (!RegExp(r'^[a-zA-Z0-9_]+$').hasMatch(username)) {
-      return 'Use only letters, numbers and underscores';
-    }
-    return null;
-  }
+  String? validateUsername(String? value) => Validators.username(value);
 
   String? validatePassword(String? value) => Validators.password(value);
 

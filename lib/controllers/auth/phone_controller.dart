@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../routes/app_routes.dart';
+import '../../utils/validators.dart';
 
 /// Business logic + state for the phone signup screen.
 ///
@@ -27,17 +28,8 @@ class PhoneController extends GetxController {
     }
   }
 
-  /// Phone number validation (kept in the controller).
-  String? validatePhone(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return 'Phone number is required';
-    }
-    final digits = value.replaceAll(RegExp(r'\D'), '');
-    if (digits.length < 7 || digits.length > 15) {
-      return 'Please enter a valid phone number';
-    }
-    return null;
-  }
+  /// Phone number validation (delegates to the shared [Validators]).
+  String? validatePhone(String? value) => Validators.phone(value);
 
   /// Validate, then proceed to OTP verification.
   void onNext() {

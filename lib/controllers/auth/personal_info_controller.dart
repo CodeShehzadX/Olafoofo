@@ -28,28 +28,16 @@ class PersonalInfoController extends GetxController {
 
   // ---- Validation -----------------------------------------------------------
 
-  String? validateFullName(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return 'Full name is required';
-    }
-    return null;
-  }
+  String? validateFullName(String? value) =>
+      Validators.required(value, fieldName: 'Full name');
 
   String? validateEmail(String? value) => Validators.email(value);
 
-  String? validateDob(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Date of birth is required';
-    }
-    return null;
-  }
+  String? validateDob(String? value) =>
+      Validators.required(value, fieldName: 'Date of birth');
 
-  String? validateGender(String? value) {
-    if (value == null || value.isEmpty) {
-      return 'Please select your gender';
-    }
-    return null;
-  }
+  String? validateGender(String? value) =>
+      Validators.required(value, fieldName: 'Gender');
 
   // ---- Pickers --------------------------------------------------------------
 

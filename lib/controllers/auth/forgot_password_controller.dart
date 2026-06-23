@@ -16,25 +16,12 @@ class ForgotPasswordController extends GetxController {
 
   // ---- Validation -----------------------------------------------------------
 
-  String? validateUsername(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return 'Username is required';
-    }
-    return null;
-  }
+  String? validateUsername(String? value) =>
+      Validators.required(value, fieldName: 'Username');
 
   String? validateEmail(String? value) => Validators.email(value);
 
-  String? validatePhone(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return 'Phone number is required';
-    }
-    final digits = value.replaceAll(RegExp(r'\D'), '');
-    if (digits.length < 7 || digits.length > 15) {
-      return 'Please enter a valid phone number';
-    }
-    return null;
-  }
+  String? validatePhone(String? value) => Validators.phone(value);
 
   // ---- Navigation -----------------------------------------------------------
 
