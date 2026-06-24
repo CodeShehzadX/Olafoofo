@@ -24,6 +24,8 @@ import '../controllers/main/main_controller.dart';
 import '../controllers/home/home_controller.dart';
 import '../screens/notifications/notification_screen.dart';
 import '../controllers/notifications/notification_controller.dart';
+import '../screens/comments/comments_screen.dart';
+import '../controllers/comments/comments_controller.dart';
 
 class AppPages {
   static final routes = [
@@ -126,6 +128,14 @@ class AppPages {
       page: () => const NotificationScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut<NotificationController>(() => NotificationController());
+      }),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.comments,
+      page: () => const CommentsScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<CommentsController>(() => CommentsController());
       }),
       transition: Transition.cupertino,
     ),

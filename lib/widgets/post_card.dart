@@ -15,6 +15,7 @@ class PostCard extends StatelessWidget {
     this.onLikeTap,
     this.onCommentTap,
     this.onViewComments,
+    this.showViewComments = true,
   });
 
   final PostModel post;
@@ -22,6 +23,10 @@ class PostCard extends StatelessWidget {
   final VoidCallback? onLikeTap;
   final VoidCallback? onCommentTap;
   final VoidCallback? onViewComments;
+
+  /// Whether to show the trailing "View all comments" link.
+  /// Hidden on the Comments screen, where it would be redundant.
+  final bool showViewComments;
 
   static const Color _red = Color(0xFFEB5757);
 
@@ -170,17 +175,18 @@ class PostCard extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(height: 4),
-
           // View all comments
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: onViewComments,
-            child: Text(
-              'View all ${post.commentCount} comments',
-              style: const TextStyle(fontSize: 13, color: AppColors.textHint),
+          if (showViewComments) ...[
+            const SizedBox(height: 4),
+            GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: onViewComments,
+              child: Text(
+                'View all ${post.commentCount} comments',
+                style: const TextStyle(fontSize: 13, color: AppColors.textHint),
+              ),
             ),
-          ),
+          ],
         ],
       ),
     );

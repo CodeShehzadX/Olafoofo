@@ -147,9 +147,9 @@ class HomeController extends GetxController {
     Get.toNamed(AppRoutes.profile);
   }
 
-  /// Open the comments screen for [post].
+  /// Open the comments screen for [post], passing it through navigation.
   void openComments(PostModel post) {
-    // TODO: navigate to the Comments screen once its route exists.
+    Get.toNamed(AppRoutes.comments, arguments: post);
   }
 
   @override
