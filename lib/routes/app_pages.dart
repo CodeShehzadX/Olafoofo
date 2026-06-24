@@ -19,6 +19,8 @@ import '../screens/onboarding/onboarding_screen.dart';
 import '../controllers/onboarding/onboarding_controller.dart';
 import '../screens/auth/phone_screen.dart';
 import '../controllers/auth/phone_controller.dart';
+import '../screens/main/main_screen.dart';
+import '../controllers/main/main_controller.dart';
 
 class AppPages {
   static final routes = [
@@ -106,6 +108,14 @@ class AppPages {
         Get.lazyPut<PhoneController>(() => PhoneController());
       }),
       transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.home,
+      page: () => const MainScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<MainController>(() => MainController());
+      }),
+      transition: Transition.fade,
     ),
     // Add more routes here as you build your app
   ];
