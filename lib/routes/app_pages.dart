@@ -21,6 +21,7 @@ import '../screens/auth/phone_screen.dart';
 import '../controllers/auth/phone_controller.dart';
 import '../screens/main/main_screen.dart';
 import '../controllers/main/main_controller.dart';
+import '../controllers/home/home_controller.dart';
 
 class AppPages {
   static final routes = [
@@ -114,6 +115,7 @@ class AppPages {
       page: () => const MainScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut<MainController>(() => MainController());
+        Get.lazyPut<HomeController>(() => HomeController());
       }),
       transition: Transition.fade,
     ),

@@ -5,6 +5,7 @@ import '../../controllers/main/main_controller.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_constants.dart';
 import '../../widgets/custom_bottom_navbar.dart';
+import '../home/home_screen.dart';
 
 /// The main app shell: hosts the 5 tabs behind the bottom navigation bar.
 ///
@@ -30,7 +31,8 @@ class MainScreen extends GetView<MainController> {
           () => IndexedStack(
             index: controller.currentIndex.value,
             children: [
-              for (final title in _titles) _TabPlaceholder(title: title),
+              const HomeScreen(),
+              for (final title in _titles.skip(1)) _TabPlaceholder(title: title),
             ],
           ),
         ),
