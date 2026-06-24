@@ -22,6 +22,8 @@ import '../controllers/auth/phone_controller.dart';
 import '../screens/main/main_screen.dart';
 import '../controllers/main/main_controller.dart';
 import '../controllers/home/home_controller.dart';
+import '../screens/notifications/notification_screen.dart';
+import '../controllers/notifications/notification_controller.dart';
 
 class AppPages {
   static final routes = [
@@ -118,6 +120,14 @@ class AppPages {
         Get.lazyPut<HomeController>(() => HomeController());
       }),
       transition: Transition.fade,
+    ),
+    GetPage(
+      name: AppRoutes.notifications,
+      page: () => const NotificationScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<NotificationController>(() => NotificationController());
+      }),
+      transition: Transition.cupertino,
     ),
     // Add more routes here as you build your app
   ];

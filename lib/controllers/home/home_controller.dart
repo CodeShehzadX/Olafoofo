@@ -133,7 +133,7 @@ class HomeController extends GetxController {
 
   /// Open the notifications screen.
   void openNotifications() {
-    // TODO: navigate to the Notifications screen once its route exists.
+    Get.toNamed(AppRoutes.notifications);
   }
 
   /// Open a story viewer for the story at [index].
