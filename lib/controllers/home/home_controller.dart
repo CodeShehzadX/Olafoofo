@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../routes/app_routes.dart';
+import '../story/story_viewer_controller.dart';
 
 /// A story shown in the horizontal stories row.
 class StoryItem {
@@ -136,9 +137,26 @@ class HomeController extends GetxController {
     Get.toNamed(AppRoutes.notifications);
   }
 
-  /// Open a story viewer for the story at [index].
+  /// Open a story viewer for the story at [index], passing its data.
   void openStory(int index) {
-    // TODO: navigate to the Story / Live viewer once its route exists.
+    final story = stories[index];
+    // The "add story" tile isn't a viewer.
+    if (story.isAdd) return;
+
+    Get.toNamed(
+      AppRoutes.storyViewer,
+      arguments: StoryViewData(
+        // Alternate between the two available story images.
+        image: index.isOdd
+            ? 'assets/images/story_1.png'
+            : 'assets/images/story_2.png',
+        avatar: story.avatar ?? '',
+        username: story.name,
+        time: '1hr ago',
+        isLive: story.isLive,
+        watching: 129000,
+      ),
+    );
   }
 
   /// Open a user's profile.
