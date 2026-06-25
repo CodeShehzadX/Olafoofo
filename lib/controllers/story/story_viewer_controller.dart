@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../models/story_models.dart';
+
 /// A single live-chat comment shown in the live story overlay.
 class LiveComment {
   const LiveComment({required this.username, required this.text});
@@ -11,40 +13,21 @@ class LiveComment {
   final String text;
 }
 
-/// Data for a single story view, passed through navigation so the viewer is
-/// never tied to one hardcoded story (works for any source).
-class StoryViewData {
-  const StoryViewData({
-    required this.image,
-    required this.avatar,
-    required this.username,
-    required this.time,
-    required this.isLive,
-    this.watching = 0,
-  });
-
-  /// Full-screen story image asset.
-  final String image;
-  final String avatar;
-  final String username;
-
-  /// "1hr ago" — shown for normal stories.
-  final String time;
-  final bool isLive;
-
-  /// Number of viewers — shown for live stories.
-  final int watching;
-}
-
 /// Business logic + state for the Story Viewer (GetX, no setState).
+///
+/// Receives a [StoryGroup] (and start index) via [Get.arguments] and steps
+/// through that user's media one by one; closes after the last one.
 class StoryViewerController extends GetxController {
-  /// The story being viewed — provided via [Get.arguments].
-  late final StoryViewData data;
+  /// The story group being viewed.
+  late final StoryGroup group;
 
-  /// Story-timer progress (0..1).
+  /// Index of the currently shown media within [group].
+  final RxInt currentIndex = 0.obs;
+
+  /// Progress of the current media segment (0..1).
   final RxDouble progress = 0.0.obs;
 
-  /// Downward drag offset for the swipe-down-to-close gesture (Instagram-style).
+  /// Downward drag offset for the swipe-down-to-close gesture.
   final RxDouble dragOffset = 0.0.obs;
   double _dragAccum = 0;
 
@@ -80,31 +63,58 @@ class StoryViewerController extends GetxController {
   static const double _flingVelocity = 700; // fast fling (px/s)
   static const double _focusUpDistance = 80; // drag up distance to focus input
 
-  String get watchingText => '${_compact(data.watching)} watching';
+  int get mediaCount => group.media.length;
+  StoryMedia get currentMedia => group.media[currentIndex.value];
+  bool get isLive => group.isLive;
+
+  String get username => group.username;
+  String get avatar => group.avatar;
+  String get watchingText => '${_compact(group.watching)} watching';
   String get likeText => _compact(likeCount.value);
   String get commentText => '$commentCount';
 
   @override
   void onInit() {
     super.onInit();
-    data = Get.arguments as StoryViewData;
-    // Live stories open with an existing like tally.
-    likeCount.value = data.isLive ? 12000 : 0;
+    final args = Get.arguments as StoryViewerArgs;
+    group = args.group;
+    currentIndex.value =
+        args.startIndex.clamp(0, (mediaCount - 1).clamp(0, mediaCount));
+    likeCount.value = isLive ? 12000 : 0;
     _startProgress();
   }
 
   void _startProgress() {
+    _timer?.cancel();
+    progress.value = 0;
     final step = _tick.inMilliseconds / _storyDuration.inMilliseconds;
     _timer = Timer.periodic(_tick, (timer) {
       final next = progress.value + step;
       if (next >= 1.0) {
         progress.value = 1.0;
         timer.cancel();
-        close();
+        _advance();
       } else {
         progress.value = next;
       }
     });
+  }
+
+  /// Move to the next media, or close after the last one.
+  void _advance() {
+    if (currentIndex.value < mediaCount - 1) {
+      currentIndex.value++;
+      _startProgress();
+    } else {
+      close();
+    }
+  }
+
+  /// Progress value to render for the segment at [index].
+  double segmentProgress(int index) {
+    if (index < currentIndex.value) return 1.0;
+    if (index > currentIndex.value) return 0.0;
+    return progress.value;
   }
 
   /// Toggle the live like.

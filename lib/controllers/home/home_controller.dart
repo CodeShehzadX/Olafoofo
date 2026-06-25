@@ -1,29 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../models/story_models.dart';
 import '../../routes/app_routes.dart';
-import '../story/story_viewer_controller.dart';
-
-/// A story shown in the horizontal stories row.
-class StoryItem {
-  const StoryItem({
-    required this.name,
-    this.image,
-    this.avatar,
-    this.isLive = false,
-    this.isAdd = false,
-  });
-
-  final String name;
-
-  /// Large background image asset.
-  final String? image;
-
-  /// Small author avatar asset.
-  final String? avatar;
-  final bool isLive;
-  final bool isAdd;
-}
 
 /// A feed post. [isLiked] and [likeCount] are reactive so likes update live.
 class PostModel {
@@ -58,32 +37,51 @@ class PostModel {
 class HomeController extends GetxController {
   final TextEditingController searchController = TextEditingController();
 
-  /// Exactly 5 story items (1 add-story + 4 stories).
-  final List<StoryItem> stories = const [
-    StoryItem(name: 'Abdul', isAdd: true),
-    StoryItem(
-      name: 'Chris',
-      image: 'assets/images/1stStory_chris.png',
+  /// Story groups (reactive) — one item per user. The first group is the
+  /// current user (starts with no media → shows the Add Story card).
+  final RxList<StoryGroup> stories = <StoryGroup>[
+    StoryGroup(
+      username: 'Your Story',
+      avatar: 'assets/images/1stStory_user_image.png',
+      isCurrentUser: true,
+      media: [],
+    ),
+    StoryGroup(
+      username: 'Chris',
       avatar: 'assets/images/1stStory_user_image.png',
       isLive: true,
+      watching: 129000,
+      media: [const StoryMedia('assets/images/1stStory_chris.png')],
     ),
-    StoryItem(
-      name: 'General',
-      image: 'assets/images/2ndStory_general.png',
+    StoryGroup(
+      username: 'General',
       avatar: 'assets/images/2ndStory_user_image.png',
+      media: [const StoryMedia('assets/images/2ndStory_general.png')],
     ),
-    StoryItem(
-      name: 'Ojogbon',
-      image: 'assets/images/3rdStory_ojogbon.png',
+    StoryGroup(
+      username: 'Ojogbon',
       avatar: 'assets/images/3rdStory_user_image.png',
+      media: [const StoryMedia('assets/images/3rdStory_ojogbon.png')],
     ),
-    StoryItem(
-      name: 'John',
-      image: 'assets/images/4thStory_john.png',
-      // Reuses the first story's user image, per spec.
+    StoryGroup(
+      username: 'John',
       avatar: 'assets/images/1stStory_user_image.png',
+      media: [const StoryMedia('assets/images/4thStory_john.png')],
     ),
-  ];
+  ].obs;
+
+  /// The current user's story group (always the first item).
+  StoryGroup get currentUserStory => stories.first;
+
+  /// Append a newly captured/selected image to the current user's story group
+  /// (does NOT create a new row). [imagePath] is a file or asset path.
+  void addStoryMedia(String imagePath) {
+    currentUserStory.media.add(StoryMedia(imagePath));
+    stories.refresh();
+  }
+
+  /// Open the Add to Story screen.
+  void openAddStory() => Get.toNamed(AppRoutes.addStory);
 
   /// Dummy feed posts.
   final List<PostModel> posts = [
@@ -137,25 +135,17 @@ class HomeController extends GetxController {
     Get.toNamed(AppRoutes.notifications);
   }
 
-  /// Open a story viewer for the story at [index], passing its data.
+  /// Open the story viewer for the group at [index].
   void openStory(int index) {
-    final story = stories[index];
-    // The "add story" tile isn't a viewer.
-    if (story.isAdd) return;
-
+    final group = stories[index];
+    // A current-user group with no media opens Add Story instead.
+    if (!group.hasMedia) {
+      openAddStory();
+      return;
+    }
     Get.toNamed(
       AppRoutes.storyViewer,
-      arguments: StoryViewData(
-        // Alternate between the two available story images.
-        image: index.isOdd
-            ? 'assets/images/story_1.png'
-            : 'assets/images/story_2.png',
-        avatar: story.avatar ?? '',
-        username: story.name,
-        time: '1hr ago',
-        isLive: story.isLive,
-        watching: 129000,
-      ),
+      arguments: StoryViewerArgs(group: group),
     );
   }
 

@@ -50,9 +50,12 @@ class HomeScreen extends GetView<HomeController> {
             child: ListView(
               padding: const EdgeInsets.only(bottom: 16),
               children: [
-                StoryList(
-                  stories: controller.stories,
-                  onStoryTap: controller.openStory,
+                Obx(
+                  () => StoryList(
+                    stories: controller.stories.toList(),
+                    onStoryTap: controller.openStory,
+                    onAddTap: controller.openAddStory,
+                  ),
                 ),
                 const SizedBox(height: 8),
                 for (final post in controller.posts)

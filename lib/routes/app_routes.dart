@@ -22,4 +22,5 @@ class AppRoutes {
   static const String notifications = '/notifications';
   static const String comments = '/comments';
   static const String storyViewer = '/story-viewer';
+  static const String addStory = '/add-story';
 }

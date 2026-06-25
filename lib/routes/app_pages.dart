@@ -28,6 +28,8 @@ import '../screens/comments/comments_screen.dart';
 import '../controllers/comments/comments_controller.dart';
 import '../screens/story/story_viewer_screen.dart';
 import '../controllers/story/story_viewer_controller.dart';
+import '../screens/story/add_story_screen.dart';
+import '../controllers/story/add_story_controller.dart';
 
 class AppPages {
   static final routes = [
@@ -148,6 +150,14 @@ class AppPages {
         Get.lazyPut<StoryViewerController>(() => StoryViewerController());
       }),
       transition: Transition.fadeIn,
+    ),
+    GetPage(
+      name: AppRoutes.addStory,
+      page: () => const AddStoryScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<AddStoryController>(() => AddStoryController());
+      }),
+      transition: Transition.cupertino,
     ),
     // Add more routes here as you build your app
   ];

@@ -1,31 +1,47 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import '../utils/app_colors.dart';
 import 'user_avatar.dart';
 
-/// A single story tile in the horizontal stories row.
+/// A single story tile in the horizontal stories row (one per user).
 ///
-/// Three looks (all share the same card + bottom-centre badge layout):
-/// * [isAdd] — empty bordered card with a "+" badge (current user's add-story).
-/// * [isLive] — story image with a LIVE badge.
-/// * default — story image with the author's avatar.
+/// Looks:
+/// * [isAdd] — empty bordered card with a "+" badge (current user, no story).
+/// * [showPlusBadge] — cover image with a "+" badge (current user, has story);
+///   tapping the card opens the viewer, tapping the "+" adds another story.
+/// * [isLive] — cover image with a LIVE badge.
+/// * default — cover image with the author's avatar badge.
 class StoryAvatar extends StatelessWidget {
   const StoryAvatar({
     super.key,
     required this.name,
-    this.image,
+    this.cover,
     this.avatar,
     this.isLive = false,
     this.isAdd = false,
+    this.showPlusBadge = false,
     this.onTap,
+    this.onBadgeTap,
   });
 
   final String name;
-  final String? image;
+
+  /// Card image path (asset or file); null for the add card.
+  final String? cover;
+
+  /// Avatar badge image (other users).
   final String? avatar;
   final bool isLive;
   final bool isAdd;
+  final bool showPlusBadge;
+
+  /// Tap the card (open Add Story for [isAdd], else open the viewer).
   final VoidCallback? onTap;
+
+  /// Tap the "+" badge (open Add Story) — current user with an existing story.
+  final VoidCallback? onBadgeTap;
 
   static const double _w = 78;
   static const double _h = 112;
@@ -43,7 +59,6 @@ class StoryAvatar extends StatelessWidget {
           children: [
             SizedBox(
               width: _w,
-              // Extra half-badge of room so the bottom badge can overhang.
               height: _h + _badge / 2,
               child: Stack(
                 clipBehavior: Clip.none,
@@ -72,9 +87,9 @@ class StoryAvatar extends StatelessWidget {
     );
   }
 
-  /// The full-size card behind the badge — image, or an empty bordered box.
   Widget _card() {
-    if (isAdd) {
+    if (cover == null) {
+      // Add card — empty bordered box.
       return Container(
         width: _w,
         height: _h,
@@ -85,14 +100,17 @@ class StoryAvatar extends StatelessWidget {
         ),
       );
     }
+    final img = cover!;
     return ClipRRect(
       borderRadius: BorderRadius.circular(_radius),
-      child: Image.asset(image!, width: _w, height: _h, fit: BoxFit.cover),
+      child: img.startsWith('assets/')
+          ? Image.asset(img, width: _w, height: _h, fit: BoxFit.cover)
+          : Image.file(File(img), width: _w, height: _h, fit: BoxFit.cover),
     );
   }
 
-  /// The bottom-centre badge: a "+" for add-story, else the author avatar.
   Widget _bottomBadge() {
+    // Empty add card: white "+" circle with a grey border.
     if (isAdd) {
       return Container(
         width: _badge,
@@ -106,6 +124,26 @@ class StoryAvatar extends StatelessWidget {
         child: const Icon(Icons.add, size: 18, color: AppColors.blackText),
       );
     }
+
+    // Current user with a story: teal "+" badge to add another (tappable).
+    if (showPlusBadge) {
+      return GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: onBadgeTap,
+        child: Container(
+          width: _badge,
+          height: _badge,
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: AppColors.splashCircle,
+            border: Border.all(color: Colors.white, width: 2),
+          ),
+          child: const Icon(Icons.add, size: 18, color: Colors.white),
+        ),
+      );
+    }
+
     if (avatar != null) {
       return UserAvatar(
         image: avatar!,
