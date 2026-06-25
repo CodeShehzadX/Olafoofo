@@ -6,6 +6,7 @@ import '../../utils/app_colors.dart';
 import '../../utils/app_constants.dart';
 import '../../widgets/custom_bottom_navbar.dart';
 import '../home/home_screen.dart';
+import '../post/create_post_screen.dart';
 
 /// The main app shell: hosts the 5 tabs behind the bottom navigation bar.
 ///
@@ -13,14 +14,6 @@ import '../home/home_screen.dart';
 /// screen (Home Feed, Ofofo, Create Post, Chats, Profile) in later steps.
 class MainScreen extends GetView<MainController> {
   const MainScreen({super.key});
-
-  static const List<String> _titles = [
-    'Home',
-    'Ofofo',
-    'Add Post',
-    'Chats',
-    'Profile',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +23,12 @@ class MainScreen extends GetView<MainController> {
         body: Obx(
           () => IndexedStack(
             index: controller.currentIndex.value,
-            children: [
-              const HomeScreen(),
-              for (final title in _titles.skip(1)) _TabPlaceholder(title: title),
+            children: const [
+              HomeScreen(),
+              _TabPlaceholder(title: 'Ofofo'),
+              CreatePostScreen(),
+              _TabPlaceholder(title: 'Chats'),
+              _TabPlaceholder(title: 'Profile'),
             ],
           ),
         ),

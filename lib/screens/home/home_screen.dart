@@ -58,17 +58,23 @@ class HomeScreen extends GetView<HomeController> {
                   ),
                 ),
                 const SizedBox(height: 8),
-                for (final post in controller.posts)
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-                    child: PostCard(
-                      post: post,
-                      onProfileTap: () => controller.openProfile(post),
-                      onLikeTap: () => controller.toggleLike(post),
-                      onCommentTap: () => controller.openComments(post),
-                      onViewComments: () => controller.openComments(post),
-                    ),
+                Obx(
+                  () => Column(
+                    children: [
+                      for (final post in controller.posts)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
+                          child: PostCard(
+                            post: post,
+                            onProfileTap: () => controller.openProfile(post),
+                            onLikeTap: () => controller.toggleLike(post),
+                            onCommentTap: () => controller.openComments(post),
+                            onViewComments: () => controller.openComments(post),
+                          ),
+                        ),
+                    ],
                   ),
+                ),
               ],
             ),
           ),

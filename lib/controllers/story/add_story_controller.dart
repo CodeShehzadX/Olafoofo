@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../services/media_picker_service.dart';
 import '../../widgets/custom_snackbar.dart';
 import '../home/home_controller.dart';
 
@@ -14,8 +15,6 @@ import '../home/home_controller.dart';
 /// `preferredCameraDevice`. A true in-app preview + live front/back switch would
 /// require the `camera` package (not added).
 class AddStoryController extends GetxController {
-  final ImagePicker _picker = ImagePicker();
-
   /// Photo picked/captured via the OS (gallery or camera).
   final Rxn<XFile> selectedFile = Rxn<XFile>();
 
@@ -57,7 +56,7 @@ class AddStoryController extends GetxController {
   /// Open the system gallery to pick an image.
   Future<void> pickFromGallery() async {
     try {
-      final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      final XFile? image = await MediaPickerService.pickImageFromGallery();
       if (image != null) {
         selectedFile.value = image;
         selectedAsset.value = null;
@@ -70,11 +69,8 @@ class AddStoryController extends GetxController {
   /// Capture a photo with the camera (tap).
   Future<void> capturePhoto() async {
     try {
-      final XFile? photo = await _picker.pickImage(
-        source: ImageSource.camera,
-        preferredCameraDevice:
-            useFrontCamera.value ? CameraDevice.front : CameraDevice.rear,
-      );
+      final XFile? photo =
+          await MediaPickerService.capturePhoto(front: useFrontCamera.value);
       if (photo != null) {
         selectedFile.value = photo;
         selectedAsset.value = null;
@@ -87,11 +83,8 @@ class AddStoryController extends GetxController {
   /// Capture a video with the camera (hold).
   Future<void> captureVideo() async {
     try {
-      final XFile? video = await _picker.pickVideo(
-        source: ImageSource.camera,
-        preferredCameraDevice:
-            useFrontCamera.value ? CameraDevice.front : CameraDevice.rear,
-      );
+      final XFile? video =
+          await MediaPickerService.captureVideo(front: useFrontCamera.value);
       if (video != null) {
         // TODO: preview/upload the captured video. We only render an image
         // preview for now; playback needs a video_player package.

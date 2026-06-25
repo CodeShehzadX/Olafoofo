@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -82,15 +84,22 @@ class PostCard extends StatelessWidget {
           ),
           const SizedBox(height: 12),
 
-          // Post image
+          // Post image (bundled asset, or a picked file for new posts)
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
-            child: Image.asset(
-              post.postImage,
-              width: double.infinity,
-              height: 240,
-              fit: BoxFit.cover,
-            ),
+            child: post.isAssetImage
+                ? Image.asset(
+                    post.postImage,
+                    width: double.infinity,
+                    height: 240,
+                    fit: BoxFit.cover,
+                  )
+                : Image.file(
+                    File(post.postImage),
+                    width: double.infinity,
+                    height: 240,
+                    fit: BoxFit.cover,
+                  ),
           ),
           const SizedBox(height: 10),
 

@@ -31,6 +31,11 @@ class PostModel {
 
   final RxBool isLiked;
   final RxInt likeCount;
+
+  /// True if [postImage] is a bundled asset; false for a picked/captured file
+  /// (e.g. a post created from the Create Post screen). Mirrors
+  /// [StoryMedia.isAsset].
+  bool get isAssetImage => postImage.startsWith('assets/');
 }
 
 /// Business logic for the Home Feed (GetX only, no setState).
@@ -83,8 +88,8 @@ class HomeController extends GetxController {
   /// Open the Add to Story screen.
   void openAddStory() => Get.toNamed(AppRoutes.addStory);
 
-  /// Dummy feed posts.
-  final List<PostModel> posts = [
+  /// Dummy feed posts (reactive so newly created posts appear live at the top).
+  final RxList<PostModel> posts = <PostModel>[
     PostModel(
       userImage: 'assets/images/1stpost_user_image.png',
       userName: 'Oyin Dolapo',
@@ -117,7 +122,36 @@ class HomeController extends GetxController {
       likeCount: 312,
       commentCount: 24,
     ),
-  ];
+  ].obs;
+
+  /// Create a new feed post (from the Create Post screen) and insert it at the
+  /// top of the feed. [imagePath] is a device file path from the image picker.
+  void addPost({
+    required String imagePath,
+    required String caption,
+    String hashtags = '',
+  }) {
+    final String fullCaption =
+        hashtags.isEmpty ? caption : '$caption\n$hashtags';
+    posts.insert(
+      0,
+      PostModel(
+        userImage: currentUserStory.avatar,
+        userName: 'You',
+        time: 'Just now',
+        caption: fullCaption,
+        postImage: imagePath,
+        likedAvatars: const [
+          'assets/images/like_user_image_1.png',
+          'assets/images/like_user_image_2.png',
+          'assets/images/like_user_image_3.png',
+        ],
+        likedByName: 'Blazinshado',
+        likeCount: 0,
+        commentCount: 0,
+      ),
+    );
+  }
 
   /// Toggle the like state of [post].
   void toggleLike(PostModel post) {
