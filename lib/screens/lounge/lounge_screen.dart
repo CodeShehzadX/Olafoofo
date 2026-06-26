@@ -61,10 +61,11 @@ class LoungeScreen extends GetView<LoungeController> {
             ],
           ),
 
-          // Floating create-Ofofo button.
+          // Floating create-Ofofo button — right side, lower-middle area,
+          // overlapping near the third card (Figma page 23).
           Positioned(
-            right: 16,
-            bottom: 16,
+            right: 18,
+            bottom: 100,
             child: _createButton(),
           ),
         ],
@@ -134,8 +135,8 @@ class LoungeScreen extends GetView<LoungeController> {
       behavior: HitTestBehavior.opaque,
       onTap: controller.createOfofo,
       child: Container(
-        width: 56,
-        height: 56,
+        width: 50,
+        height: 50,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: AppColors.splashCircle,
@@ -148,12 +149,37 @@ class LoungeScreen extends GetView<LoungeController> {
           ],
         ),
         child: Center(
-          child: SvgPicture.asset(
-            'assets/icons/ofofo_plus.svg',
-            height: 26,
-            colorFilter: const ColorFilter.mode(
-              Colors.white,
-              BlendMode.srcIn,
+          // The Ofofo/lounge glyph with the small plus mark at its top-right.
+          child: SizedBox(
+            width: 26,
+            height: 24,
+            child: Stack(
+              clipBehavior: Clip.none,
+              children: [
+                Align(
+                  alignment: Alignment.bottomLeft,
+                  child: SvgPicture.asset(
+                    'assets/icons/ofofo_white_filled.svg',
+                    height: 19,
+                    colorFilter: const ColorFilter.mode(
+                      Colors.white,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: -3,
+                  right: 0,
+                  child: SvgPicture.asset(
+                    'assets/icons/ofofo_plus.svg',
+                    height: 8,
+                    colorFilter: const ColorFilter.mode(
+                      Colors.white,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ),
