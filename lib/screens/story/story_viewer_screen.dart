@@ -11,8 +11,6 @@ import '../../widgets/user_avatar.dart';
 class StoryViewerScreen extends GetView<StoryViewerController> {
   const StoryViewerScreen({super.key});
 
-  static const Color _red = Color(0xFFEB5757);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -204,7 +202,7 @@ class StoryViewerScreen extends GetView<StoryViewerController> {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: _red,
+        color: AppColors.likeRed,
         borderRadius: BorderRadius.circular(6),
       ),
       child: const Text(
@@ -264,7 +262,7 @@ class StoryViewerScreen extends GetView<StoryViewerController> {
               'assets/icons/Heart.svg',
               height: 36,
               colorFilter: ColorFilter.mode(
-                controller.isLiked.value ? _red : Colors.white,
+                controller.isLiked.value ? AppColors.likeRed : Colors.white,
                 BlendMode.srcIn,
               ),
             ),

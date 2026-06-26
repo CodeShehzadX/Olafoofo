@@ -160,7 +160,7 @@ color: isEnabled ? AppColors.blackText : AppColors.textSecondary,        ),
           focusedBorder: widget.borderColor != null
               ? OutlineInputBorder(
                   borderSide: BorderSide(
-                    color: AppColors.secondary,
+                    color: widget.borderColor!,
                     width: widget.borderSideWidth ?? 1,
                   ),
                   borderRadius: BorderRadius.circular(widget.borderRadius ?? 12),

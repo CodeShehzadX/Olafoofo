@@ -54,6 +54,10 @@ class AppColors {
   static const Color lightBorder = Color(0xFFEDF1F3);
   static const Color borderColor = Color(0xFFB9B9B9);
 
+  // Feature Accent Colors
+  static const Color likeRed = Color(0xFFEB5757); // heart / like red
+  static const Color loungeCard = Color(0xFF6E9499); // Ofofo/Lounge card bg
+
   // Gradients
   static const LinearGradient primaryGradient = LinearGradient(
     colors: [primary, primaryLight],

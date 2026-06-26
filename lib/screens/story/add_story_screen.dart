@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../../controllers/story/add_story_controller.dart';
 import '../../utils/app_colors.dart';
+import '../../widgets/back_title_app_bar.dart';
 import '../../utils/app_constants.dart';
 import '../../widgets/custom_button.dart';
 
@@ -19,26 +20,27 @@ class AddStoryScreen extends GetView<AddStoryController> {
         body: SafeArea(
           child: Column(
             children: [
-              _appBar(),
+              BackTitleAppBar(title: 'Add to story', onBack: controller.onBack),
               Expanded(child: _preview()),
               _galleryRow(),
               // Post button — hidden until an image is selected/captured.
               Obx(
-                () => controller.hasSelection
-                    ? Padding(
-                        padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-                        child: CustomButton(
-                          height: 52,
-                          margin: 0,
-                          borderRadius: 14,
-                          title: 'Add to Story',
-                          titleFontSize: 16,
-                          backgroundColor: AppColors.splashCircle,
-                          textColor: Colors.white,
-                          onTap: controller.postStory,
-                        ),
-                      )
-                    : const SizedBox.shrink(),
+                () =>
+                    controller.hasSelection
+                        ? Padding(
+                          padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
+                          child: CustomButton(
+                            height: 52,
+                            margin: 0,
+                            borderRadius: 14,
+                            title: 'Add to Story',
+                            titleFontSize: 16,
+                            backgroundColor: AppColors.splashCircle,
+                            textColor: Colors.white,
+                            onTap: controller.postStory,
+                          ),
+                        )
+                        : const SizedBox.shrink(),
               ),
               const SizedBox(height: 12),
               _bottomControls(),
@@ -51,42 +53,6 @@ class AddStoryScreen extends GetView<AddStoryController> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _appBar() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-      child: Row(
-        children: [
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: controller.onBack,
-            child: const SizedBox(
-              width: 40,
-              height: 40,
-              child: Icon(
-                Icons.arrow_back_ios_new,
-                size: 20,
-                color: AppColors.blackText,
-              ),
-            ),
-          ),
-          const Expanded(
-            child: Center(
-              child: Text(
-                'Add to story',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.blackText,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 40, height: 40),
-        ],
       ),
     );
   }
@@ -126,9 +92,10 @@ class AddStoryScreen extends GetView<AddStoryController> {
                 width: 74,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(14),
-                  border: selected
-                      ? Border.all(color: AppColors.splashCircle, width: 3)
-                      : null,
+                  border:
+                      selected
+                          ? Border.all(color: AppColors.splashCircle, width: 3)
+                          : null,
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
@@ -197,9 +164,10 @@ class AddStoryScreen extends GetView<AddStoryController> {
                   () => Icon(
                     Icons.photo_camera_outlined,
                     size: 30,
-                    color: controller.useFrontCamera.value
-                        ? AppColors.splashCircle
-                        : AppColors.blackText,
+                    color:
+                        controller.useFrontCamera.value
+                            ? AppColors.splashCircle
+                            : AppColors.blackText,
                   ),
                 ),
               ),

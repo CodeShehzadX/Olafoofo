@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 
 import '../../controllers/profile/my_profile_controller.dart';
 import '../../utils/app_colors.dart';
+import '../../widgets/back_title_app_bar.dart';
 import '../../widgets/custom_button.dart';
-import '../../widgets/profile_stat_item.dart';
+import '../../widgets/profile_stats_row.dart';
 import '../../widgets/user_avatar.dart';
 
 /// My Profile tab — header, bio, edit button, stats and a 3-column posts grid.
@@ -19,7 +20,7 @@ class MyProfileScreen extends GetView<MyProfileController> {
       bottom: false,
       child: Column(
         children: [
-          _appBar(),
+          BackTitleAppBar(title: 'My Profile', onBack: controller.onBack),
           Expanded(
             child: ListView(
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
@@ -49,7 +50,11 @@ class MyProfileScreen extends GetView<MyProfileController> {
                   onTap: controller.openEditProfile,
                 ),
                 const SizedBox(height: 18),
-                _stats(),
+                ProfileStatsRow(
+                  postsCount: controller.postsCount,
+                  followingCount: controller.followingCount,
+                  followersCount: controller.followersCount,
+                ),
                 const SizedBox(height: 22),
                 const Text(
                   'Posts',
@@ -64,42 +69,6 @@ class MyProfileScreen extends GetView<MyProfileController> {
               ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _appBar() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-      child: Row(
-        children: [
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: controller.onBack,
-            child: const SizedBox(
-              width: 40,
-              height: 40,
-              child: Icon(
-                Icons.arrow_back_ios_new,
-                size: 20,
-                color: AppColors.blackText,
-              ),
-            ),
-          ),
-          const Expanded(
-            child: Center(
-              child: Text(
-                'My Profile',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.blackText,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 40, height: 40),
         ],
       ),
     );
@@ -148,39 +117,6 @@ class MyProfileScreen extends GetView<MyProfileController> {
         ),
       ],
     );
-  }
-
-  Widget _stats() {
-    return IntrinsicHeight(
-      child: Row(
-        children: [
-          Expanded(
-            child: ProfileStatItem(
-              count: controller.postsCount,
-              label: 'Posts',
-            ),
-          ),
-          _divider(),
-          Expanded(
-            child: ProfileStatItem(
-              count: controller.followingCount,
-              label: 'Following',
-            ),
-          ),
-          _divider(),
-          Expanded(
-            child: ProfileStatItem(
-              count: controller.followersCount,
-              label: 'Followers',
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _divider() {
-    return Container(width: 1, color: AppColors.lightBorder);
   }
 
   Widget _postsGrid() {

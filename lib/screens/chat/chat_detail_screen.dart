@@ -162,20 +162,25 @@ class ChatDetailScreen extends GetView<ChatDetailController> {
               ),
             ),
             const SizedBox(width: 10),
-            // Send button
-            GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: controller.send,
-              child: Container(
-                width: 44,
-                height: 44,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.splashCircle,
+            // Send button — enabled only when the input has text.
+            Obx(() {
+              final bool enabled = controller.canSend.value;
+              return GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: enabled ? controller.send : null,
+                child: Container(
+                  width: 44,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: enabled
+                        ? AppColors.splashCircle
+                        : AppColors.splashCircle.withValues(alpha: 0.4),
+                  ),
+                  child: const Icon(Icons.send, color: Colors.white, size: 20),
                 ),
-                child: const Icon(Icons.send, color: Colors.white, size: 20),
-              ),
-            ),
+              );
+            }),
           ],
         ),
       ),

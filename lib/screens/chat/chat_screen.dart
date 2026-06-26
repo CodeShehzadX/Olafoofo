@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../controllers/chat/chat_controller.dart';
 import '../../utils/app_colors.dart';
+import '../../widgets/back_title_app_bar.dart';
 import '../../widgets/chat_tile.dart';
 import '../../widgets/custom_search_bar.dart';
 
@@ -19,7 +20,7 @@ class ChatScreen extends GetView<ChatController> {
       bottom: false,
       child: Column(
         children: [
-          _appBar(),
+          BackTitleAppBar(title: 'Chats', onBack: controller.onBack),
           Padding(
             padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
             child: CustomSearchBar(
@@ -38,49 +39,10 @@ class ChatScreen extends GetView<ChatController> {
                 _sectionTitle('All Messages'),
                 const SizedBox(height: 4),
                 for (final chat in controller.chats)
-                  ChatTile(
-                    chat: chat,
-                    onTap: () => controller.openChat(chat),
-                  ),
+                  ChatTile(chat: chat, onTap: () => controller.openChat(chat)),
               ],
             ),
           ),
-        ],
-      ),
-    );
-  }
-
-  Widget _appBar() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-      child: Row(
-        children: [
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () => Get.back(),
-            child: const SizedBox(
-              width: 40,
-              height: 40,
-              child: Icon(
-                Icons.arrow_back_ios_new,
-                size: 20,
-                color: AppColors.blackText,
-              ),
-            ),
-          ),
-          const Expanded(
-            child: Center(
-              child: Text(
-                'Chats',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.blackText,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 40, height: 40),
         ],
       ),
     );
@@ -130,9 +92,10 @@ class ChatScreen extends GetView<ChatController> {
                     height: 14,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: contact.isOnline
-                          ? AppColors.success
-                          : AppColors.error,
+                      color:
+                          contact.isOnline
+                              ? AppColors.success
+                              : AppColors.error,
                       border: Border.all(color: Colors.white, width: 2),
                     ),
                   ),

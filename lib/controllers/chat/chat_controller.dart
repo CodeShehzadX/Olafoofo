@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../routes/app_routes.dart';
+import '../main/main_controller.dart';
 
 /// A person shown in the "Frequently chatted" horizontal row.
 class FrequentContact {
@@ -115,6 +116,10 @@ class ChatController extends GetxController {
   /// Open the Chat Detail for [chat].
   void openChat(ChatItem chat) =>
       Get.toNamed(AppRoutes.chatDetail, arguments: chat);
+
+  /// Back button — return to the Home tab (this is a shell tab, not a pushed
+  /// route, so it must switch tabs rather than pop the shell).
+  void onBack() => Get.find<MainController>().changeTab(0);
 
   @override
   void onClose() {

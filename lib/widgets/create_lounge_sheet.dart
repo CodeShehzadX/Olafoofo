@@ -5,6 +5,7 @@ import '../controllers/lounge/create_lounge_controller.dart';
 import '../utils/app_colors.dart';
 import 'custom_button.dart';
 import 'custom_textfield.dart';
+import 'sheet_drag_handle.dart';
 
 /// The Create Lounge modal bottom sheet — Figma page 24.
 ///
@@ -70,7 +71,7 @@ class _CreateLoungeSheetState extends State<CreateLoungeSheet> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _dragHandle(),
+              const SheetDragHandle(),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 8, 20, 20),
                 child: Column(
@@ -133,18 +134,6 @@ class _CreateLoungeSheetState extends State<CreateLoungeSheet> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _dragHandle() {
-    return Container(
-      width: 44,
-      height: 5,
-      margin: const EdgeInsets.only(top: 12, bottom: 8),
-      decoration: BoxDecoration(
-        color: AppColors.blackText,
-        borderRadius: BorderRadius.circular(3),
       ),
     );
   }

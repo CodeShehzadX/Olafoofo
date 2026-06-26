@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../controllers/profile/edit_profile_controller.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_constants.dart';
+import '../../widgets/back_title_app_bar.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_textfield.dart';
 import '../../widgets/user_avatar.dart';
@@ -20,7 +21,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
         body: SafeArea(
           child: Column(
             children: [
-              _appBar(),
+              BackTitleAppBar(title: 'My Profile', onBack: controller.onBack),
               Expanded(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
@@ -129,42 +130,6 @@ class EditProfileScreen extends GetView<EditProfileController> {
     );
   }
 
-  Widget _appBar() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-      child: Row(
-        children: [
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: controller.onBack,
-            child: const SizedBox(
-              width: 40,
-              height: 40,
-              child: Icon(
-                Icons.arrow_back_ios_new,
-                size: 20,
-                color: AppColors.blackText,
-              ),
-            ),
-          ),
-          const Expanded(
-            child: Center(
-              child: Text(
-                'My Profile',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.blackText,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 40, height: 40),
-        ],
-      ),
-    );
-  }
-
   Widget _header() {
     return Row(
       children: [
@@ -205,7 +170,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
     return Text(
       text,
       style: const TextStyle(
-        fontSize: 15,
+        fontSize: 18,
         fontWeight: FontWeight.w600,
         color: AppColors.blackText,
       ),

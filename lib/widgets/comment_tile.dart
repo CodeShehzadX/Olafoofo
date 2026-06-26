@@ -13,8 +13,6 @@ class CommentTile extends StatelessWidget {
   final CommentItem item;
   final VoidCallback? onLikeTap;
 
-  static const Color _red = Color(0xFFEB5757);
-
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -38,7 +36,9 @@ class CommentTile extends StatelessWidget {
                         'assets/icons/Heart.svg',
                         height: 16,
                         colorFilter: ColorFilter.mode(
-                          item.isLiked.value ? _red : AppColors.textHint,
+                          item.isLiked.value
+                              ? AppColors.likeRed
+                              : AppColors.textHint,
                           BlendMode.srcIn,
                         ),
                       ),

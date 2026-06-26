@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 import '../../controllers/profile/user_profile_controller.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_constants.dart';
-import '../../widgets/profile_stat_item.dart';
+import '../../widgets/back_title_app_bar.dart';
+import '../../widgets/profile_stats_row.dart';
 import '../../widgets/user_avatar.dart';
 
 /// Another user's Profile — header, bio + Follow/Message, stats, followers row
@@ -21,7 +22,7 @@ class UserProfileScreen extends GetView<UserProfileController> {
         body: SafeArea(
           child: Column(
             children: [
-              _appBar(),
+              BackTitleAppBar(title: 'Profile', onBack: controller.onBack),
               Expanded(
                 child: ListView(
                   padding: const EdgeInsets.fromLTRB(16, 8, 16, 16),
@@ -30,7 +31,11 @@ class UserProfileScreen extends GetView<UserProfileController> {
                     const SizedBox(height: 14),
                     _bioAndActions(),
                     const SizedBox(height: 18),
-                    _stats(),
+                    ProfileStatsRow(
+                      postsCount: controller.postsCount,
+                      followingCount: controller.followingCount,
+                      followersCount: controller.followersCount,
+                    ),
                     const SizedBox(height: 18),
                     _sectionDivider(),
                     const SizedBox(height: 18),
@@ -49,42 +54,6 @@ class UserProfileScreen extends GetView<UserProfileController> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _appBar() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-      child: Row(
-        children: [
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: controller.onBack,
-            child: const SizedBox(
-              width: 40,
-              height: 40,
-              child: Icon(
-                Icons.arrow_back_ios_new,
-                size: 20,
-                color: AppColors.blackText,
-              ),
-            ),
-          ),
-          const Expanded(
-            child: Center(
-              child: Text(
-                'Profile',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.blackText,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 40, height: 40),
-        ],
       ),
     );
   }
@@ -109,10 +78,7 @@ class UserProfileScreen extends GetView<UserProfileController> {
               const SizedBox(height: 3),
               Text(
                 controller.location,
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: AppColors.textHint,
-                ),
+                style: const TextStyle(fontSize: 13, color: AppColors.textHint),
               ),
             ],
           ),
@@ -204,36 +170,6 @@ class UserProfileScreen extends GetView<UserProfileController> {
         ),
       );
     });
-  }
-
-  Widget _stats() {
-    return IntrinsicHeight(
-      child: Row(
-        children: [
-          Expanded(
-            child: ProfileStatItem(count: controller.postsCount, label: 'Posts'),
-          ),
-          _divider(),
-          Expanded(
-            child: ProfileStatItem(
-              count: controller.followingCount,
-              label: 'Following',
-            ),
-          ),
-          _divider(),
-          Expanded(
-            child: ProfileStatItem(
-              count: controller.followersCount,
-              label: 'Followers',
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _divider() {
-    return Container(width: 1, color: AppColors.lightBorder);
   }
 
   /// Thin full-width line above the Followers and Posts sections (Figma).

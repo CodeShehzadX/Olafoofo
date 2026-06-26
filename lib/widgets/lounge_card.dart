@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../controllers/lounge/lounge_controller.dart';
+import '../utils/app_colors.dart';
+import 'overlapping_avatars.dart';
 import 'user_avatar.dart';
 
 /// A single Ofofo/Lounge room card: live label, title, listener count +
@@ -11,9 +13,6 @@ class LoungeCard extends StatelessWidget {
   final Lounge lounge;
   final VoidCallback? onTap;
 
-  /// Muted teal card background from the Figma.
-  static const Color _cardColor = Color(0xFF6E9499);
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -21,7 +20,7 @@ class LoungeCard extends StatelessWidget {
       onTap: onTap,
       child: Container(
         decoration: BoxDecoration(
-          color: _cardColor,
+          color: AppColors.loungeCard,
           borderRadius: BorderRadius.circular(16),
         ),
         padding: const EdgeInsets.all(18),
@@ -32,10 +31,7 @@ class LoungeCard extends StatelessWidget {
             if (lounge.isLive)
               const Text(
                 'Live',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.white,
-                ),
+                style: TextStyle(fontSize: 14, color: Colors.white),
               ),
             const SizedBox(height: 10),
 
@@ -54,7 +50,12 @@ class LoungeCard extends StatelessWidget {
             // Listener avatars + count
             Row(
               children: [
-                _listenerAvatars(),
+                OverlappingAvatars(
+                  images: lounge.listenerAvatars,
+                  size: 28,
+                  overlap: 18,
+                  borderColor: AppColors.loungeCard,
+                ),
                 const SizedBox(width: 12),
                 Expanded(
                   child: Text(
@@ -90,31 +91,6 @@ class LoungeCard extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  /// Overlapping cluster of listener avatars (same approach as PostCard).
-  Widget _listenerAvatars() {
-    const double size = 28;
-    const double overlap = 18;
-    final avatars = lounge.listenerAvatars;
-    return SizedBox(
-      width: size + (avatars.length - 1) * overlap,
-      height: size,
-      child: Stack(
-        children: [
-          for (int i = 0; i < avatars.length; i++)
-            Positioned(
-              left: i * overlap,
-              child: UserAvatar(
-                image: avatars[i],
-                size: size,
-                borderColor: _cardColor,
-                borderWidth: 2,
-              ),
-            ),
-        ],
       ),
     );
   }

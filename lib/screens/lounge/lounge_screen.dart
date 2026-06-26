@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../controllers/lounge/lounge_controller.dart';
 import '../../utils/app_colors.dart';
+import '../../widgets/back_title_app_bar.dart';
 import '../../widgets/custom_search_bar.dart';
 import '../../widgets/lounge_card.dart';
 
@@ -23,7 +24,7 @@ class LoungeScreen extends GetView<LoungeController> {
         children: [
           Column(
             children: [
-              _appBar(),
+              BackTitleAppBar(title: 'Ofofo', onBack: controller.onBack),
               Padding(
                 padding: const EdgeInsets.fromLTRB(16, 4, 16, 0),
                 child: CustomSearchBar(controller: controller.searchController),
@@ -63,47 +64,7 @@ class LoungeScreen extends GetView<LoungeController> {
 
           // Floating create-Ofofo button — right side, lower-middle area,
           // overlapping near the third card (Figma page 23).
-          Positioned(
-            right: 18,
-            bottom: 100,
-            child: _createButton(),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _appBar() {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 8, 16, 8),
-      child: Row(
-        children: [
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: controller.onBack,
-            child: const SizedBox(
-              width: 40,
-              height: 40,
-              child: Icon(
-                Icons.arrow_back_ios_new,
-                size: 20,
-                color: AppColors.blackText,
-              ),
-            ),
-          ),
-          const Expanded(
-            child: Center(
-              child: Text(
-                'Ofofo',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.blackText,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: 40, height: 40),
+          Positioned(right: 18, bottom: 100, child: _createButton()),
         ],
       ),
     );

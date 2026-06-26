@@ -5,6 +5,7 @@ import '../controllers/lounge/live_lounge_controller.dart';
 import '../controllers/lounge/lounge_controller.dart';
 import '../utils/app_colors.dart';
 import 'custom_button.dart';
+import 'sheet_drag_handle.dart';
 import 'user_avatar.dart';
 
 /// The Live Lounge modal bottom sheet — Figma page 25.
@@ -41,6 +42,14 @@ class _LiveLoungeSheetState extends State<LiveLoungeSheet> {
   }
 
   @override
+  void dispose() {
+    // Runs the controller's cleanup once the sheet is fully gone — consistent
+    // with CreateLoungeSheet, so any disposables added later are released.
+    controller.onClose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final maxHeight = MediaQuery.sizeOf(context).height * 0.9;
     return Container(
@@ -55,7 +64,7 @@ class _LiveLoungeSheetState extends State<LiveLoungeSheet> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              _dragHandle(),
+              const SheetDragHandle(),
               Flexible(
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
@@ -88,18 +97,6 @@ class _LiveLoungeSheetState extends State<LiveLoungeSheet> {
             ],
           ),
         ),
-      ),
-    );
-  }
-
-  Widget _dragHandle() {
-    return Container(
-      width: 44,
-      height: 5,
-      margin: const EdgeInsets.only(top: 12, bottom: 8),
-      decoration: BoxDecoration(
-        color: AppColors.blackText,
-        borderRadius: BorderRadius.circular(3),
       ),
     );
   }
@@ -137,9 +134,10 @@ class _LiveLoungeSheetState extends State<LiveLoungeSheet> {
               // Mic toggle — speaker/volume icon.
               Obx(
                 () => _controlButton(
-                  icon: controller.micOn.value
-                      ? Icons.volume_up
-                      : Icons.volume_off,
+                  icon:
+                      controller.micOn.value
+                          ? Icons.volume_up
+                          : Icons.volume_off,
                   label: controller.micOn.value ? 'Mic is on' : 'Mic is off',
                   background: AppColors.splashCircle,
                   onTap: controller.toggleMic,
@@ -151,9 +149,10 @@ class _LiveLoungeSheetState extends State<LiveLoungeSheet> {
                 () => _controlButton(
                   icon: Icons.mic,
                   label: controller.recording.value ? 'Recording' : 'Record',
-                  background: controller.recording.value
-                      ? AppColors.error
-                      : AppColors.splashCircle,
+                  background:
+                      controller.recording.value
+                          ? AppColors.error
+                          : AppColors.splashCircle,
                   onTap: controller.toggleRecording,
                 ),
               ),
@@ -197,7 +196,8 @@ class _LiveLoungeSheetState extends State<LiveLoungeSheet> {
   /// 4-column members grid; the trailing cell is the "+N listeners" label.
   Widget _membersGrid() {
     const int columns = 4;
-    final int total = controller.members.length + 1; // + the "+N listeners" cell
+    final int total =
+        controller.members.length + 1; // + the "+N listeners" cell
     final int rows = (total / columns).ceil();
 
     return Column(

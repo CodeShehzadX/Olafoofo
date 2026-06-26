@@ -94,8 +94,10 @@ class CommentsController extends GetxController {
     }
   }
 
-  /// Open the post author's profile.
-  void onProfileTap() => Get.toNamed(AppRoutes.profile);
+  /// Open the post author's profile, passing their data through navigation
+  /// (same pattern as the Home feed).
+  void onProfileTap() =>
+      Get.toNamed(AppRoutes.userProfile, arguments: post);
 
   /// Pop back to the previous screen.
   void onBack() => Get.back();

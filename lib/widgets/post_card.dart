@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 
 import '../controllers/home/home_controller.dart';
 import '../utils/app_colors.dart';
+import 'overlapping_avatars.dart';
 import 'user_avatar.dart';
 
 /// A single feed post card (header, caption, image, like/comment actions).
@@ -29,8 +30,6 @@ class PostCard extends StatelessWidget {
   /// Whether to show the trailing "View all comments" link.
   /// Hidden on the Comments screen, where it would be redundant.
   final bool showViewComments;
-
-  static const Color _red = Color(0xFFEB5757);
 
   @override
   Widget build(BuildContext context) {
@@ -87,26 +86,32 @@ class PostCard extends StatelessWidget {
           // Post image (bundled asset, or a picked file for new posts)
           ClipRRect(
             borderRadius: BorderRadius.circular(12),
-            child: post.isAssetImage
-                ? Image.asset(
-                    post.postImage,
-                    width: double.infinity,
-                    height: 240,
-                    fit: BoxFit.cover,
-                  )
-                : Image.file(
-                    File(post.postImage),
-                    width: double.infinity,
-                    height: 240,
-                    fit: BoxFit.cover,
-                  ),
+            child:
+                post.isAssetImage
+                    ? Image.asset(
+                      post.postImage,
+                      width: double.infinity,
+                      height: 240,
+                      fit: BoxFit.cover,
+                    )
+                    : Image.file(
+                      File(post.postImage),
+                      width: double.infinity,
+                      height: 240,
+                      fit: BoxFit.cover,
+                    ),
           ),
           const SizedBox(height: 10),
 
           // Liked avatars + like/comment actions
           Row(
             children: [
-              _likedAvatars(),
+              OverlappingAvatars(
+                images: post.likedAvatars,
+                size: 26,
+                overlap: 16,
+                borderColor: AppColors.lightGray,
+              ),
               const Spacer(),
               GestureDetector(
                 behavior: HitTestBehavior.opaque,
@@ -118,7 +123,9 @@ class PostCard extends StatelessWidget {
                         'assets/icons/Heart.svg',
                         height: 20,
                         colorFilter: ColorFilter.mode(
-                          post.isLiked.value ? _red : AppColors.textHint,
+                          post.isLiked.value
+                              ? AppColors.likeRed
+                              : AppColors.textHint,
                           BlendMode.srcIn,
                         ),
                       ),
@@ -196,29 +203,6 @@ class PostCard extends StatelessWidget {
               ),
             ),
           ],
-        ],
-      ),
-    );
-  }
-
-  Widget _likedAvatars() {
-    const double size = 26;
-    const double overlap = 16;
-    return SizedBox(
-      width: size + (post.likedAvatars.length - 1) * overlap,
-      height: size,
-      child: Stack(
-        children: [
-          for (int i = 0; i < post.likedAvatars.length; i++)
-            Positioned(
-              left: i * overlap,
-              child: UserAvatar(
-                image: post.likedAvatars[i],
-                size: size,
-                borderColor: AppColors.lightGray,
-                borderWidth: 2,
-              ),
-            ),
         ],
       ),
     );
