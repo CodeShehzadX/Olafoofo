@@ -69,7 +69,12 @@ class OtpController extends GetxController {
 
   /// Keep [otp] in sync with the field.
   void onOtpChanged(String value) => otp.value = value;
-  void onOtpCompleted(String value) => otp.value = value;
+
+  /// Fired when the 4th digit is entered — auto-validate and continue.
+  void onOtpCompleted(String value) {
+    otp.value = value;
+    onNext();
+  }
 
   /// Request a new code once the countdown has elapsed.
   void resendCode() {

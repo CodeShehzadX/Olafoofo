@@ -78,19 +78,22 @@ class OtpScreen extends GetView<OtpController> {
                 const SizedBox(height: 20),
 
                 // OTP boxes
-                Pinput(
-                  length: OtpController.otpLength,
-                  controller: controller.pinController,
-                  focusNode: controller.pinFocusNode,
-                  autofocus: true,
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  defaultPinTheme: defaultPinTheme,
-                  focusedPinTheme: focusedPinTheme,
-                  submittedPinTheme: defaultPinTheme,
-                  separatorBuilder: (_) => const SizedBox(width: 14),
-                  onChanged: controller.onOtpChanged,
-                  onCompleted: controller.onOtpCompleted,
+                Center(
+                  child: Pinput(
+                    length: OtpController.otpLength,
+                    controller: controller.pinController,
+                    focusNode: controller.pinFocusNode,
+                    autofocus: true,
+                    keyboardType: TextInputType.number,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    defaultPinTheme: defaultPinTheme,
+                    focusedPinTheme: focusedPinTheme,
+                    submittedPinTheme: defaultPinTheme,
+                    separatorBuilder: (_) => const SizedBox(width: 14),
+                    onChanged: controller.onOtpChanged,
+                    onCompleted: controller.onOtpCompleted,
+                  ),
                 ),
                 const SizedBox(height: 14),
 
