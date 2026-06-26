@@ -5,6 +5,7 @@ import '../../controllers/main/main_controller.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_constants.dart';
 import '../../widgets/custom_bottom_navbar.dart';
+import '../chat/chat_screen.dart';
 import '../home/home_screen.dart';
 import '../lounge/lounge_screen.dart';
 import '../post/create_post_screen.dart';
@@ -28,7 +29,7 @@ class MainScreen extends GetView<MainController> {
               HomeScreen(),
               LoungeScreen(),
               CreatePostScreen(),
-              _TabPlaceholder(title: 'Chats'),
+              ChatScreen(),
               _TabPlaceholder(title: 'Profile'),
             ],
           ),

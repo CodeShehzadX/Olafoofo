@@ -32,6 +32,9 @@ import '../screens/story/add_story_screen.dart';
 import '../controllers/story/add_story_controller.dart';
 import '../controllers/post/create_post_controller.dart';
 import '../controllers/lounge/lounge_controller.dart';
+import '../controllers/chat/chat_controller.dart';
+import '../screens/chat/chat_detail_screen.dart';
+import '../controllers/chat/chat_detail_controller.dart';
 
 class AppPages {
   static final routes = [
@@ -128,6 +131,7 @@ class AppPages {
         Get.lazyPut<HomeController>(() => HomeController());
         Get.lazyPut<CreatePostController>(() => CreatePostController());
         Get.lazyPut<LoungeController>(() => LoungeController());
+        Get.lazyPut<ChatController>(() => ChatController());
       }),
       transition: Transition.fade,
     ),
@@ -160,6 +164,14 @@ class AppPages {
       page: () => const AddStoryScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut<AddStoryController>(() => AddStoryController());
+      }),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.chatDetail,
+      page: () => const ChatDetailScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<ChatDetailController>(() => ChatDetailController());
       }),
       transition: Transition.cupertino,
     ),
