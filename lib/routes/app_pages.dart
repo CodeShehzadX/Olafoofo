@@ -35,6 +35,9 @@ import '../controllers/lounge/lounge_controller.dart';
 import '../controllers/chat/chat_controller.dart';
 import '../screens/chat/chat_detail_screen.dart';
 import '../controllers/chat/chat_detail_controller.dart';
+import '../controllers/profile/my_profile_controller.dart';
+import '../screens/profile/edit_profile_screen.dart';
+import '../controllers/profile/edit_profile_controller.dart';
 
 class AppPages {
   static final routes = [
@@ -132,6 +135,7 @@ class AppPages {
         Get.lazyPut<CreatePostController>(() => CreatePostController());
         Get.lazyPut<LoungeController>(() => LoungeController());
         Get.lazyPut<ChatController>(() => ChatController());
+        Get.lazyPut<MyProfileController>(() => MyProfileController());
       }),
       transition: Transition.fade,
     ),
@@ -172,6 +176,14 @@ class AppPages {
       page: () => const ChatDetailScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut<ChatDetailController>(() => ChatDetailController());
+      }),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.editProfile,
+      page: () => const EditProfileScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<EditProfileController>(() => EditProfileController());
       }),
       transition: Transition.cupertino,
     ),
