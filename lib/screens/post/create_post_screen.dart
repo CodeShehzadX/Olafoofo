@@ -130,7 +130,8 @@ class CreatePostScreen extends GetView<CreatePostController> {
       behavior: HitTestBehavior.opaque,
       onTap: controller.pickImage,
       child: Container(
-        height: 290,
+        height: 290
+        ,
         decoration: BoxDecoration(
           color: AppColors.lightGray,
           borderRadius: BorderRadius.circular(16),

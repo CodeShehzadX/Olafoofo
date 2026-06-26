@@ -6,6 +6,7 @@ import '../../utils/app_colors.dart';
 import '../../utils/app_constants.dart';
 import '../../widgets/custom_bottom_navbar.dart';
 import '../home/home_screen.dart';
+import '../lounge/lounge_screen.dart';
 import '../post/create_post_screen.dart';
 
 /// The main app shell: hosts the 5 tabs behind the bottom navigation bar.
@@ -25,7 +26,7 @@ class MainScreen extends GetView<MainController> {
             index: controller.currentIndex.value,
             children: const [
               HomeScreen(),
-              _TabPlaceholder(title: 'Ofofo'),
+              LoungeScreen(),
               CreatePostScreen(),
               _TabPlaceholder(title: 'Chats'),
               _TabPlaceholder(title: 'Profile'),

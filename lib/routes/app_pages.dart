@@ -31,6 +31,7 @@ import '../controllers/story/story_viewer_controller.dart';
 import '../screens/story/add_story_screen.dart';
 import '../controllers/story/add_story_controller.dart';
 import '../controllers/post/create_post_controller.dart';
+import '../controllers/lounge/lounge_controller.dart';
 
 class AppPages {
   static final routes = [
@@ -126,6 +127,7 @@ class AppPages {
         Get.lazyPut<MainController>(() => MainController());
         Get.lazyPut<HomeController>(() => HomeController());
         Get.lazyPut<CreatePostController>(() => CreatePostController());
+        Get.lazyPut<LoungeController>(() => LoungeController());
       }),
       transition: Transition.fade,
     ),
