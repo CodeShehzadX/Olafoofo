@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../widgets/create_lounge_sheet.dart';
+import '../../widgets/live_lounge_sheet.dart';
 import '../main/main_controller.dart';
 
 /// A single Ofofo/Lounge room shown on the Ofofo list screen.
@@ -81,15 +83,11 @@ class LoungeController extends GetxController {
     ),
   ];
 
-  /// Open the create-Ofofo flow (floating button).
-  void createOfofo() {
-    // TODO: navigate to the Create Ofofo screen (not built yet).
-  }
+  /// Open the Create Lounge modal bottom sheet (floating button).
+  void createOfofo() => CreateLoungeSheet.show();
 
-  /// Open a lounge room.
-  void openLounge(Lounge lounge) {
-    // TODO: navigate to the Ofofo room screen (not built yet).
-  }
+  /// Open the Live Lounge bottom sheet for [lounge].
+  void openLounge(Lounge lounge) => LiveLoungeSheet.show(lounge);
 
   /// Back button — return to the Home tab.
   void onBack() => Get.find<MainController>().changeTab(0);
