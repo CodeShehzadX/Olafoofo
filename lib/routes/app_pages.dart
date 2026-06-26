@@ -38,6 +38,8 @@ import '../controllers/chat/chat_detail_controller.dart';
 import '../controllers/profile/my_profile_controller.dart';
 import '../screens/profile/edit_profile_screen.dart';
 import '../controllers/profile/edit_profile_controller.dart';
+import '../screens/profile/user_profile_screen.dart';
+import '../controllers/profile/user_profile_controller.dart';
 
 class AppPages {
   static final routes = [
@@ -184,6 +186,14 @@ class AppPages {
       page: () => const EditProfileScreen(),
       binding: BindingsBuilder(() {
         Get.lazyPut<EditProfileController>(() => EditProfileController());
+      }),
+      transition: Transition.cupertino,
+    ),
+    GetPage(
+      name: AppRoutes.userProfile,
+      page: () => const UserProfileScreen(),
+      binding: BindingsBuilder(() {
+        Get.lazyPut<UserProfileController>(() => UserProfileController());
       }),
       transition: Transition.cupertino,
     ),

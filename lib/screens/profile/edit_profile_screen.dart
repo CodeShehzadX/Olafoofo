@@ -168,7 +168,7 @@ class EditProfileScreen extends GetView<EditProfileController> {
   Widget _header() {
     return Row(
       children: [
-        UserAvatar(image: controller.avatar, size: 58),
+        _avatarWithBadge(),
         const SizedBox(width: 14),
         Expanded(
           child: Column(
@@ -208,6 +208,38 @@ class EditProfileScreen extends GetView<EditProfileController> {
         fontSize: 15,
         fontWeight: FontWeight.w600,
         color: AppColors.blackText,
+      ),
+    );
+  }
+
+  /// Profile avatar with the camera/edit badge (Figma — Edit Profile only).
+  Widget _avatarWithBadge() {
+    return SizedBox(
+      width: 58,
+      height: 58,
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          UserAvatar(image: controller.avatar, size: 58),
+          Positioned(
+            right: -2,
+            bottom: -2,
+            child: Container(
+              width: 22,
+              height: 22,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.splashCircle,
+                border: Border.all(color: Colors.white, width: 2),
+              ),
+              child: const Icon(
+                Icons.photo_camera,
+                size: 11,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

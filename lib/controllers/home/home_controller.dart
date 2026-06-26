@@ -183,10 +183,9 @@ class HomeController extends GetxController {
     );
   }
 
-  /// Open a user's profile.
+  /// Open the tapped user's profile, passing their data through navigation.
   void openProfile(PostModel post) {
-    // Route constant exists; the profile page is registered in a later step.
-    Get.toNamed(AppRoutes.profile);
+    Get.toNamed(AppRoutes.userProfile, arguments: post);
   }
 
   /// Open the comments screen for [post], passing it through navigation.

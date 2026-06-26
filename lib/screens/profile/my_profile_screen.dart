@@ -108,7 +108,7 @@ class MyProfileScreen extends GetView<MyProfileController> {
   Widget _header() {
     return Row(
       children: [
-        _avatarWithBadge(),
+        UserAvatar(image: MyProfileController.avatar, size: 58),
         const SizedBox(width: 14),
         Expanded(
           child: Column(
@@ -147,41 +147,6 @@ class MyProfileScreen extends GetView<MyProfileController> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _avatarWithBadge() {
-    return SizedBox(
-      width: 58,
-      height: 58,
-      child: Stack(
-        clipBehavior: Clip.none,
-        children: [
-          UserAvatar(image: MyProfileController.avatar, size: 58),
-          Positioned(
-            right: -2,
-            bottom: -2,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: controller.editProfilePicture,
-              child: Container(
-                width: 22,
-                height: 22,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.splashCircle,
-                  border: Border.all(color: Colors.white, width: 2),
-                ),
-                child: const Icon(
-                  Icons.photo_camera,
-                  size: 11,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
     );
   }
 
