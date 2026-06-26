@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 
 import '../../utils/app_colors.dart';
 import '../../utils/app_constants.dart';
+import '../../widgets/animations.dart';
 import '../../widgets/custom_button.dart';
 import '../../controllers/onboarding/onboarding_controller.dart';
 
@@ -33,83 +34,84 @@ class OnboardingScreen extends GetView<OnboardingController> {
               ),
 
               // Action buttons + sign-in (shared across all pages)
-              Padding(
-                padding: const EdgeInsets.fromLTRB(24, 0, 24,24),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    // Buttons depend on the current page index
-                    Obx(() {
-                      if (controller.isLastPage) {
-                        return CustomButton(
-                          height: 56,
-                          margin: 0,
-                          borderRadius: 14,
-                          title: 'Continue',
-                          titleFontSize: 16,
-                          backgroundColor: AppColors.splashCircle,
-                          textColor: Colors.white,
-                          onTap: controller.onContinue,
-                        );
-                      }
-                      return Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          CustomButton(
+              FadeSlideIn(
+                offset: Offset.zero,
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      // Buttons depend on the current page index
+                      Obx(() {
+                        if (controller.isLastPage) {
+                          return CustomButton(
                             height: 56,
                             margin: 0,
                             borderRadius: 14,
-                            title: 'Next',
+                            title: 'Continue',
                             titleFontSize: 16,
                             backgroundColor: AppColors.splashCircle,
                             textColor: Colors.white,
-                            onTap: controller.onNext,
-                          ),
-                          const SizedBox(height: 14),
-                          CustomButton(
-                            height: 56,
-                            margin: 0,
-                            borderRadius: 14,
-                            title: 'Skip',
-                            titleFontSize: 16,
-                            backgroundColor: Colors.white,
-                            textColor: AppColors.blackText,
-                            borderColor: AppColors.borderColor,
-                            onTap: controller.onSkip,
-                          ),
-                        ],
-                      );
-                    }),
-                    Obx(
-  () => SizedBox(
-    height: controller.isLastPage ? 90 : 20,
-  ),
-),
-
-                    // Sign in — always visible
-                    GestureDetector(
-                      onTap: controller.onSignIn,
-                      child: RichText(
-                        text: const TextSpan(
-                          text: 'Already have an account? ',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.blackText,
-                          ),
+                            onTap: controller.onContinue,
+                          );
+                        }
+                        return Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            TextSpan(
-                              text: 'Sign In',
-                              style: TextStyle(
-                                color: AppColors.textHint,
-                                fontWeight: FontWeight.w600,
-                              ),
+                            CustomButton(
+                              height: 56,
+                              margin: 0,
+                              borderRadius: 14,
+                              title: 'Next',
+                              titleFontSize: 16,
+                              backgroundColor: AppColors.splashCircle,
+                              textColor: Colors.white,
+                              onTap: controller.onNext,
+                            ),
+                            const SizedBox(height: 14),
+                            CustomButton(
+                              height: 56,
+                              margin: 0,
+                              borderRadius: 14,
+                              title: 'Skip',
+                              titleFontSize: 16,
+                              backgroundColor: Colors.white,
+                              textColor: AppColors.blackText,
+                              borderColor: AppColors.borderColor,
+                              onTap: controller.onSkip,
                             ),
                           ],
+                        );
+                      }),
+                      Obx(
+                        () => SizedBox(height: controller.isLastPage ? 90 : 20),
+                      ),
+
+                      // Sign in — always visible
+                      GestureDetector(
+                        onTap: controller.onSignIn,
+                        child: RichText(
+                          text: const TextSpan(
+                            text: 'Already have an account? ',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.blackText,
+                            ),
+                            children: [
+                              TextSpan(
+                                text: 'Sign In',
+                                style: TextStyle(
+                                  color: AppColors.textHint,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -137,32 +139,34 @@ class _OnboardingPage extends StatelessWidget {
         Expanded(child: _AvatarCluster(avatars: avatars)),
 
         // Title + description
-        Padding(
-          padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                data.title,
-                style: const TextStyle(
-                  fontSize: 26,
-                  height: 1.25,
-                  fontWeight: FontWeight.w700,
-                  color: AppColors.blackText,
+        FadeSlideIn(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(24, 0, 24, 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  data.title,
+                  style: const TextStyle(
+                    fontSize: 26,
+                    height: 1.25,
+                    fontWeight: FontWeight.w700,
+                    color: AppColors.blackText,
+                  ),
                 ),
-              ),
-              const SizedBox(height: 12),
-              Text(
-                data.description,
-                style: const TextStyle(
-                  fontSize: 15,
-                  height: 1.45,
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.textHint,
+                const SizedBox(height: 12),
+                Text(
+                  data.description,
+                  style: const TextStyle(
+                    fontSize: 15,
+                    height: 1.45,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.textHint,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],
@@ -195,11 +199,15 @@ class _AvatarCluster extends StatelessWidget {
             // Centre — large hero avatar
             Align(
               alignment: const Alignment(0, -0.15),
-              child: _Avatar(
-                size: w * 0.34,
-                background: _centerBg,
-                asset: avatars.centre,
-                imageInset: 0.10,
+              child: FloatingMotion(
+                amplitude: 6,
+                duration: const Duration(milliseconds: 3400),
+                child: _Avatar(
+                  size: w * 0.34,
+                  background: _centerBg,
+                  asset: avatars.centre,
+                  imageInset: 0.10,
+                ),
               ),
             ),
 
@@ -207,10 +215,15 @@ class _AvatarCluster extends StatelessWidget {
             Positioned(
               top: h * 0.06,
               right: w * 0.14,
-              child: _Avatar(
-                size: w * 0.16,
-                background: AppColors.splashCircle,
-                asset: avatars.topRight,
+              child: FloatingMotion(
+                amplitude: 7,
+                duration: const Duration(milliseconds: 3200),
+                phase: 0.1,
+                child: _Avatar(
+                  size: w * 0.16,
+                  background: AppColors.splashCircle,
+                  asset: avatars.topRight,
+                ),
               ),
             ),
 
@@ -218,10 +231,15 @@ class _AvatarCluster extends StatelessWidget {
             Positioned(
               top: h * 0.13,
               left: w * 0.10,
-              child: _Avatar(
-                size: 44,
-                background: _lightBg,
-                asset: avatars.topLeft,
+              child: FloatingMotion(
+                amplitude: 5,
+                duration: const Duration(milliseconds: 4000),
+                phase: 0.3,
+                child: _Avatar(
+                  size: 44,
+                  background: _lightBg,
+                  asset: avatars.topLeft,
+                ),
               ),
             ),
 
@@ -229,10 +247,15 @@ class _AvatarCluster extends StatelessWidget {
             Positioned(
               top: h * 0.50,
               left: w * 0.06,
-              child: _Avatar(
-                size: w * 0.17,
-                background: AppColors.splashCircle,
-                asset: avatars.leftMiddle,
+              child: FloatingMotion(
+                amplitude: 8,
+                duration: const Duration(milliseconds: 3600),
+                phase: 0.5,
+                child: _Avatar(
+                  size: w * 0.17,
+                  background: AppColors.splashCircle,
+                  asset: avatars.leftMiddle,
+                ),
               ),
             ),
 
@@ -240,10 +263,15 @@ class _AvatarCluster extends StatelessWidget {
             Positioned(
               top: h * 0.54,
               right: w * 0.08,
-              child: _Avatar(
-                size: 40,
-                background: _lightBg,
-                asset: avatars.rightMiddle,
+              child: FloatingMotion(
+                amplitude: 6,
+                duration: const Duration(milliseconds: 4200),
+                phase: 0.2,
+                child: _Avatar(
+                  size: 40,
+                  background: _lightBg,
+                  asset: avatars.rightMiddle,
+                ),
               ),
             ),
 
@@ -251,10 +279,15 @@ class _AvatarCluster extends StatelessWidget {
             Positioned(
               bottom: h * 0.20,
               right: w * 0.16,
-              child: _Avatar(
-                size: w * 0.14,
-                background: _centerBg,
-                asset: avatars.bottomRight,
+              child: FloatingMotion(
+                amplitude: 7,
+                duration: const Duration(milliseconds: 3800),
+                phase: 0.6,
+                child: _Avatar(
+                  size: w * 0.14,
+                  background: _centerBg,
+                  asset: avatars.bottomRight,
+                ),
               ),
             ),
 
@@ -262,10 +295,15 @@ class _AvatarCluster extends StatelessWidget {
             Positioned(
               bottom: h * 0.15,
               left: w * 0.28,
-              child: _Avatar(
-                size: 46,
-                background: _lightBg,
-                asset: avatars.bottomCentre,
+              child: FloatingMotion(
+                amplitude: 5,
+                duration: const Duration(milliseconds: 4400),
+                phase: 0.4,
+                child: _Avatar(
+                  size: 46,
+                  background: _lightBg,
+                  asset: avatars.bottomCentre,
+                ),
               ),
             ),
           ],
@@ -296,10 +334,7 @@ class _Avatar extends StatelessWidget {
     return Container(
       height: size,
       width: size,
-      decoration: BoxDecoration(
-        color: background,
-        shape: BoxShape.circle,
-      ),
+      decoration: BoxDecoration(color: background, shape: BoxShape.circle),
       padding: EdgeInsets.all(size * imageInset),
       child: Image.asset(asset, fit: BoxFit.contain),
     );

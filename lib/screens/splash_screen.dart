@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import '../utils/app_colors.dart';
 import '../routes/app_routes.dart';
+import '../widgets/animations.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -32,45 +33,79 @@ class _SplashScreenState extends State<SplashScreen> {
       child: Scaffold(
         backgroundColor: AppColors.lightBackground,
         body: Stack(
-          
           children: [
             Positioned(
               top: 121,
               left: 261,
-              child: _circle(65),
+              child: FloatingMotion(
+                amplitude: 8,
+                duration: const Duration(milliseconds: 3200),
+                child: _circle(65),
+              ),
             ),
             Positioned(
               top: 199,
               left: 83,
-              child: _circle(42),
+              child: FloatingMotion(
+                amplitude: 6,
+                duration: const Duration(milliseconds: 4000),
+                phase: 0.25,
+                child: _circle(42),
+              ),
             ),
             Positioned(
-             top: 450,
+              top: 450,
               left: 50,
-              child: _circle(55),
+              child: FloatingMotion(
+                amplitude: 10,
+                duration: const Duration(milliseconds: 3600),
+                phase: 0.5,
+                child: _circle(55),
+              ),
             ),
             Positioned(
-             top: 500,
+              top: 500,
               right: 80,
-              child: _circle(50),
+              child: FloatingMotion(
+                amplitude: 7,
+                duration: const Duration(milliseconds: 4400),
+                phase: 0.15,
+                child: _circle(50),
+              ),
             ),
             Positioned(
               bottom: 250,
               right: 55,
-              child: _circle(32),
+              child: FloatingMotion(
+                amplitude: 5,
+                duration: const Duration(milliseconds: 2800),
+                phase: 0.7,
+                child: _circle(32),
+              ),
             ),
             Positioned(
               bottom: 155,
               left: 110,
-              child: _circle(42),
+              child: FloatingMotion(
+                amplitude: 9,
+                duration: const Duration(milliseconds: 3800),
+                phase: 0.4,
+                child: _circle(42),
+              ),
             ),
-      
+
             Center(
-              child: Image.asset(
-                'assets/images/logo-1.png',
-                width: 181,
-                height: 60,
-                fit: BoxFit.contain,
+              child: FadeSlideIn(
+                child: FloatingMotion(
+                  amplitude: 6,
+                  duration: const Duration(milliseconds: 3400),
+                  child: Image.asset(
+                    'assets/images/logo-1.png',
+                    width: 181,
+                    height: 60,
+                    fit: BoxFit.contain,
+                  ),
+                ),
               ),
             ),
           ],

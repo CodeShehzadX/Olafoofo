@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../controllers/auth/welcome_controller.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_constants.dart';
+import '../../widgets/animations.dart';
 import '../../widgets/custom_button.dart';
 
 class WelcomeScreen extends GetView<WelcomeController> {
@@ -23,27 +24,34 @@ class WelcomeScreen extends GetView<WelcomeController> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                _illustration(),
+                FadeSlideIn(child: _illustration()),
                 const SizedBox(height: 28),
-                const Text(
-                  'Welcome',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.blackText,
+                FadeSlideIn(
+                  delay: const Duration(milliseconds: 120),
+                  child: const Text(
+                    'Welcome',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 26,
+                      fontWeight: FontWeight.w700,
+                      color: AppColors.blackText,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 28),
-                CustomButton(
-                  height: 56,
-                  margin: 0,
-                  borderRadius: 14,
-                  title: 'Continue',
-                  titleFontSize: 16,
-                  backgroundColor: AppColors.splashCircle,
-                  textColor: Colors.white,
-                  onTap: controller.onContinue,
+                FadeSlideIn(
+                  delay: const Duration(milliseconds: 240),
+                  offset: Offset.zero,
+                  child: CustomButton(
+                    height: 56,
+                    margin: 0,
+                    borderRadius: 14,
+                    title: 'Continue',
+                    titleFontSize: 16,
+                    backgroundColor: AppColors.splashCircle,
+                    textColor: Colors.white,
+                    onTap: controller.onContinue,
+                  ),
                 ),
               ],
             ),
@@ -72,25 +80,107 @@ class WelcomeScreen extends GetView<WelcomeController> {
           ),
 
           // Hero illustration (138 x 138)
-          Image.asset(
-            'assets/images/signup_succes.png',
-            width: 138,
-            height: 138,
-            fit: BoxFit.contain,
+          FloatingMotion(
+            amplitude: 6,
+            duration: const Duration(milliseconds: 3400),
+            child: Image.asset(
+              'assets/images/signup_succes.png',
+              width: 138,
+              height: 138,
+              fit: BoxFit.contain,
+            ),
           ),
 
           // Scattered stars
-          const Positioned(top: 24, left: 270, child: _Star(size: 20)),
-          const Positioned(top: 219, left: 228, child: _Star(size: 16)),
-          const Positioned(top:104, left: 90,child:  _Star(size: 15)),
-          
+          Positioned(
+            top: 24,
+            left: 270,
+            child: FloatingMotion(
+              amplitude: 6,
+              dx: 3,
+              duration: const Duration(milliseconds: 3200),
+              child: const _Star(size: 20),
+            ),
+          ),
+          Positioned(
+            top: 219,
+            left: 228,
+            child: FloatingMotion(
+              amplitude: 5,
+              dx: 2,
+              duration: const Duration(milliseconds: 3800),
+              phase: 0.4,
+              child: const _Star(size: 16),
+            ),
+          ),
+          Positioned(
+            top: 104,
+            left: 90,
+            child: FloatingMotion(
+              amplitude: 7,
+              dx: 2,
+              duration: const Duration(milliseconds: 4200),
+              phase: 0.6,
+              child: const _Star(size: 15),
+            ),
+          ),
 
           // Scattered dots
-         const Positioned(top: 8, left: 88, child: _Dot(size: 20)),
-          const Positioned(top: 12, left: 160, child: _Dot(size: 12)),
-          const Positioned(bottom: 46, left: 64, child: _Dot(size: 10)),
-          const Positioned(bottom: 20, left: 120, child: _Dot(size: 8)),
-          const Positioned(bottom: 60, right: 44, child: _Dot(size: 10)),
+          Positioned(
+            top: 8,
+            left: 88,
+            child: FloatingMotion(
+              amplitude: 5,
+              dx: 2,
+              duration: const Duration(milliseconds: 3000),
+              phase: 0.2,
+              child: const _Dot(size: 20),
+            ),
+          ),
+          Positioned(
+            top: 12,
+            left: 160,
+            child: FloatingMotion(
+              amplitude: 6,
+              dx: 3,
+              duration: const Duration(milliseconds: 3600),
+              phase: 0.5,
+              child: const _Dot(size: 12),
+            ),
+          ),
+          Positioned(
+            bottom: 46,
+            left: 64,
+            child: FloatingMotion(
+              amplitude: 4,
+              dx: 2,
+              duration: const Duration(milliseconds: 4000),
+              phase: 0.1,
+              child: const _Dot(size: 10),
+            ),
+          ),
+          Positioned(
+            bottom: 20,
+            left: 120,
+            child: FloatingMotion(
+              amplitude: 5,
+              dx: 2,
+              duration: const Duration(milliseconds: 3400),
+              phase: 0.7,
+              child: const _Dot(size: 8),
+            ),
+          ),
+          Positioned(
+            bottom: 60,
+            right: 44,
+            child: FloatingMotion(
+              amplitude: 6,
+              dx: 3,
+              duration: const Duration(milliseconds: 4400),
+              phase: 0.3,
+              child: const _Dot(size: 10),
+            ),
+          ),
         ],
       ),
     );
